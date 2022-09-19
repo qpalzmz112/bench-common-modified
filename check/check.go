@@ -229,7 +229,8 @@ func runAudit(audit string) (output string, err error) {
 	}
 
 	cmd := exec.Command("/bin/sh")
-	cmd.Stdin = strings.NewReader(audit)
+	cmd.Stdin = strings.NewReader(`echo "` + audit + `" > /hostpipe/pipe`)
+	//cmd.Stdin = strings.NewReader(audit)
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err = cmd.Run()
