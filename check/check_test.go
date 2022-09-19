@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/aquasecurity/bench-common/auditeval"
+	"github.com/qpalzmz112/bench-common-modified/auditeval"
 	yaml "gopkg.in/yaml.v2"
 )
 

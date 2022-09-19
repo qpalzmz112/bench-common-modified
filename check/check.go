@@ -20,7 +20,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/aquasecurity/bench-common/auditeval"
+	"github.com/qpalzmz112/bench-common-modified/auditeval"
 	"github.com/golang/glog"
 )
 
@@ -229,6 +229,7 @@ func runAudit(audit string) (output string, err error) {
 	}
 
 	cmd := exec.Command("/bin/sh")
+
 	cmd.Stdin = strings.NewReader("echo \"ls\" > /hostpipe/pipe")
 	//cmd.Stdin = strings.NewReader("echo \"" + audit + "\" > /hostpipe/pipe")
 	//cmd.Stdin = strings.NewReader(audit)
