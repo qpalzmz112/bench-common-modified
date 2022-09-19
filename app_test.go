@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/aquasecurity/bench-common/check"
+	"github.com/qpalzmz112/bench-common-modified/check"
 )
 
 func init() {
