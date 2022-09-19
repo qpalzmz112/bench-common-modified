@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"os/exec"
 	"strings"
+	"io/ioutil"
 
 	"github.com/qpalzmz112/bench-common-modified/auditeval"
 	"github.com/golang/glog"
@@ -222,6 +223,7 @@ func (c *Check) Run(definedConstraints map[string][]string) {
 
 func runAudit(audit string) (output string, err error) {
 	var out bytes.Buffer
+	var pipe = False
 
 	audit = strings.TrimSpace(audit)
 	if len(audit) == 0 {
@@ -230,14 +232,34 @@ func runAudit(audit string) (output string, err error) {
 
 	cmd := exec.Command("/bin/sh")
 
-	cmd.Stdin = strings.NewReader("echo \"ls\" > /hostpipe/pipe")
-	os.Exit(3)
-	//cmd.Stdin = strings.NewReader("echo \"" + audit + "\" > /hostpipe/pipe")
-	//cmd.Stdin = strings.NewReader(audit)
+	if (strings.HasPrefix(audit, "systemctl show") || audit == "stat -c \"%N %U:%G\" /run/containerd/containerd.sock") {
+		cmd.Stdin = strings.NewReader("echo \"" + audit + "\" > /hostpipe/pipe")
+		pipe = True
+	} else {
+		cmd.Stdin = strings.NewReader(audit)
+	}
+	
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err = cmd.Run()
-	output = out.String()
+	if pipe {
+		// Does it need to wait and confirm that file has been written before reading contents? Not sure yet
+		// Need to import "io/ioutil"
+		// Read entire output file - only contains output of one command, because its content is deleted below
+		contents, err := ioutil.ReadFile("/outputdir/output.txt") 
+		if err != nil {
+			panic(e) 
+		}
+		output = string(contents)
+
+		// Reduce output file size to 0 bytes, so next read only gets the previous command's output
+		if err := os.Truncate("/outputdir/output.txt", 0); err != nil {
+			panic(e)
+		}
+
+	} else {
+		output = out.String()
+	}
 
 	if err != nil {
 		err = fmt.Errorf("failed to run: %q, output: %q, error: %s", audit, output, err)
