@@ -1,8 +1,8 @@
 package outputter
 
 import (
-	"github.com/aquasecurity/bench-common/check"
-	"github.com/aquasecurity/bench-common/util"
+	"github.com/qpalzmz112/bench-common-modified/check"
+	"github.com/qpalzmz112/bench-common-modified/util"
 )
 
 // Console outputter functionality for Standard output

@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/aquasecurity/bench-common/check"
+	"github.com/qpalzmz112/bench-common-modified/check"
 	"github.com/jinzhu/gorm"
 )
 

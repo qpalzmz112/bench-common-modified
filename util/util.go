@@ -20,7 +20,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/aquasecurity/bench-common/check"
+	"github.com/qpalzmz112/bench-common-modified/check"
 	"github.com/fatih/color"
 	"github.com/golang/glog"
 	"gopkg.in/yaml.v2"

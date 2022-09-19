@@ -3,7 +3,7 @@ package outputter
 import (
 	"fmt"
 
-	"github.com/aquasecurity/bench-common/check"
+	"github.com/qpalzmz112/bench-common-modified/check"
 )
 
 // Outputter represents the output strategy for Control objects
